@@ -1,0 +1,49 @@
+[project]
+name = "securetriage"
+version = "0.1.0"
+description = "Security alert triage agent: Claude + RAG (Titan embeddings) + Neo4j graph"
+requires-python = ">=3.11"
+dependencies = [
+  "anthropic[bedrock]>=2.0",
+  "boto3>=1.35",
+  "neo4j>=5.20",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "pip-audit>=2.7"]
+mcp = ["mcp>=2,<3"]
+agent-sdk = ["claude-agent-sdk>=0.2"]
+dashboard = ["streamlit>=1.40", "requests>=2.32", "pandas>=2.2"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+securetriage = ["prompts/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests", "tests_live"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "S"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501", "S101", "S106", "S105"]
+"tests_live/*" = ["E501", "S101", "S106", "S105", "S608"]
+"dashboard_app/*" = ["S101"]
+"scripts/*" = ["E501", "S311"]  # data generator: seeded random is the point, data lines are long
+
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/*" = ["I001"]
+"tests_live/*" = ["I001"]
+"scripts/*" = ["I001"]

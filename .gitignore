@@ -1,0 +1,32 @@
+# secrets and local config: NEVER commit these
+.env
+*.env
+Neo4j-*.txt
+*credentials*.txt
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+# build output
+build/
+.aws-sam/
+dist/
+# editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# estimated spend ledger (Chapter 11)
+.spend/
+
+# local findings database and generated dashboards (Chapter 10)
+.data/
+dashboard*.html
+cloud-dashboard.html
+dashboard_app/.streamlit/secrets.toml
+.streamlit/secrets.toml
+.claude/settings.local.json
